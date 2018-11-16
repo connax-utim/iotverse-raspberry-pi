@@ -1,5 +1,5 @@
-# iotverse-raspberry-pi
-With IoTVerse we aim to make Byteball IoT manufacturer-friendly: we miniaturise Byteball node, we add a functionality needed by the device manufacturers and users. For example we'll add secure automatic authentication without a need to configure device manually. So there will be one universal SD card flash image for Raspberry, that is securely personalised afterwards when IoT device is taken in use. It will be delivered to the developers and users in a form of open source code for target devices.
+# IoTVerse for Raspberry Pi
+With IoTVerse we aim to make Byteball IoT manufacturer-friendly: we miniaturise Byteball node, we add a functionality needed by the device manufacturers and users. For example we'll add secure automatic authentication without a need to configure device manually. So there will be one universal SD card flash image for Raspberry Pi, that is securely personalised afterwards when IoT device is taken in use. It will be delivered to the developers and users in a form of open source code for target devices.
 
 Internet of Things is chaotically expanding as a newborn Universe after the Big Bang. New technologies as stars, being born and die every day. Atom of the newborn IoT Universe (IoTVerse) is a byte of data. Every single thing here is build of data and build because of data. But just because data is so important doesn’t mean that all of it is equally valuable. Value of data is being determined by the simple formula where integrity level is multiplied by relevance.
 # Example: 
