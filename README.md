@@ -1,0 +1,2 @@
+# iotverse-raspberry-pi
+With IoTVerse we aim to make Byteball IoT manufacturer-friendly: we miniaturise Byteball node, we add a functionality needed by the device manufacturers and users. For example we'll add secure automatic authentication without a need to configure device manually. So there will be one universal SD card flash image for Raspberry, that is securely personalised afterwards when IoT device is taken in use. It will be delivered to the developers and users in a form of open source code for target devices.
