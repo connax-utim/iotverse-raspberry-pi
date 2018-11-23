@@ -42,21 +42,21 @@ IoT device owners would like to fully manage their devices and have full ownersh
 
 # Install
 
-Clone the repository
+Clone the repository:
 
 ```
 git clone https://github.com/connax-utim/iotverse-raspberry-pi
 ```
 
-install dependencies
+Install dependencies:
 
 ```
 npm install
 ```
 
-Install [uhost](https://utim.readthedocs.io/en/latest/user/uhost_installation.html)
+Install [uhost](https://utim.readthedocs.io/en/latest/user/uhost_installation.html).
 
-Install [utim](https://utim.readthedocs.io/en/latest/user/utim_installation.html)
+Install [utim](https://utim.readthedocs.io/en/latest/user/utim_installation.html).
 
 Run Utim launcher:
 
