@@ -5,11 +5,15 @@ const cors = require('cors');
 const jsonParser = require('body-parser').json;
 const app = connect();
 
-const PASS = '12345678';
+const PASS = process.env.UTIM_SESSION_KEY;
 const PORT = 4303;
 
 async function Start() {
-	await core.init('test');
+    if(!PASS) {
+        console.log('No UTIM_SESSION_KEY environment variable set. Execute utim/utim_launcher.py first!');
+        exit();
+    }
+	await core.init(PASS);
 
 	let stream = net.createServer([
 		core.getWallets,

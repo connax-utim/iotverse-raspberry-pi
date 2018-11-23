@@ -39,3 +39,38 @@ IoT device owners would like to fully manage their devices and have full ownersh
 - Hence, the process needs to be automated by using security module or Universal Thing Identity Module - further in text as “UTIM”; 
 - Personalising millions of devices from your own seed is too expensive; 
 - Hence we need a trusted process in place, capable of doing it.
+
+# Install
+
+Clone the repository
+
+```
+git clone https://github.com/connax-utim/iotverse-raspberry-pi
+```
+
+install dependencies
+
+```
+npm install
+```
+
+Install [uhost](https://utim.readthedocs.io/en/latest/user/uhost_installation.html)
+
+Install [utim](https://utim.readthedocs.io/en/latest/user/utim_installation.html)
+
+Run Utim launcher:
+
+```
+python3 utim/utim_launcher.py
+```
+
+If connection to Uhost is successful, the script will add and load an environment
+variable UTIM_SESSION_KEY to the current user session.
+
+# Usage
+
+Run server
+
+```
+node server
+```
