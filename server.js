@@ -9,10 +9,6 @@ const PASS = process.env.UTIM_SESSION_KEY;
 const PORT = 4303;
 
 async function Start() {
-    if(!PASS) {
-        console.log('No UTIM_SESSION_KEY environment variable set. Execute utim/utim_launcher.py first!');
-        exit();
-    }
 	await core.init(PASS);
 
 	let stream = net.createServer([
@@ -38,13 +34,18 @@ async function Start() {
 		core.listCorrespondents
 	]);
 
-    app.use(cors({methods: ['POST']}));
-    app.use(jsonParser());
-    app.use((req, res, next) => req.headers['x-auth'] === PASS ? next() : res.statusCode = 403);
-    app.use(stream.middleware());
-    app.listen(PORT);
+	app.use(cors({methods: ['POST']}));
+	app.use(jsonParser());
+	app.use((req, res, next) => req.headers['x-auth'] === PASS ? next() : res.statusCode = 403);
+	app.use(stream.middleware());
+	app.listen(PORT);
 
 	return 'Ok';
 };
 
-Start().then(console.log).catch(console.error);
+if(PASS) {
+	console.log(PASS);
+	Start().then(console.log).catch(console.error);
+} else {
+	throw new Error('There is no UTIM_SESSION_KEY environment variable in ~/.bachrc file. Launch /utim/utim_launcher.py first!');
+}

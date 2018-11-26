@@ -58,14 +58,21 @@ Install [uhost](https://utim.readthedocs.io/en/latest/user/uhost_installation.ht
 
 Install [utim](https://utim.readthedocs.io/en/latest/user/utim_installation.html).
 
-Run Utim launcher:
+Run Utim launcher (uses utim/config.ini, so has to be run from the same directory):
 
 ```
-python3 utim/utim_launcher.py
+cd utim
+python3 utim_launcher.py
+cd ..
 ```
 
 If connection to Uhost is successful, the script will add and load an environment
-variable UTIM_SESSION_KEY to the current user session.
+variable UTIM_SESSION_KEY to the current user session. If the variable is not loaded,
+do it manually:
+
+```
+source ~/.bashrc
+```
 
 # Usage
 
