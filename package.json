@@ -1,16 +1,18 @@
 {
-  "name": "biot-rpc",
+  "name": "iotverse-raspberry-pi",
   "version": "1.0.0",
-  "description": "rpc networking for biot-core",
+  "description": "connax utim integration with biot-core",
   "main": "server.js",
   "scripts": {},
-  "author": "Ivan Remmelgas",
+  "author": "Tatyana Lomazina",
   "license": "MIT",
   "dependencies": {
     "biot-core": "git+https://github.com/BIoTws/biot-core.git",
     "body-parser": "^1.18.3",
     "connect": "^3.6.6",
     "cors": "^2.8.4",
-    "jayson": "2.0.6"
+    "jayson": "2.0.6",
+    "config.ini": "^0.0.52",
+    "mqtt": "^2.18.8"
   }
 }
