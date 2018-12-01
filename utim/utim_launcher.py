@@ -11,71 +11,71 @@ import subprocess
 from os.path import expanduser
 
 #logging.basicConfig(format='[%(asctime)s] %(filename)30s %(threadName)15s %(lineno)5s'
-#                           ' %(funcName)30s: %(message)s', level=logging.DEBUG)
+#						   ' %(funcName)30s: %(message)s', level=logging.DEBUG)
 
 
 def main():
-    """
-    Main function
-    """
+	"""
+	Main function
+	"""
 
-    concrete_utim = None
-    cm1 = None
-    session_key = None
+	concrete_utim = None
+	cm1 = None
+	session_key = None
 
-    logging.info("INIT rxQ")
-    rx_queue = queue.Queue()
-    logging.info("INIT txQ")
-    tx_queue = queue.Queue()
+	logging.info("INIT rxQ")
+	rx_queue = queue.Queue()
+	logging.info("INIT txQ")
+	tx_queue = queue.Queue()
 
-    try:
-        cm1 = ConnectivityManager()
-        cm1.connect(dl_type=DataLinkManager.TYPE_QUEUE, rx=tx_queue, tx=rx_queue)
+	try:
+		cm1 = ConnectivityManager()
+		cm1.connect(dl_type=DataLinkManager.TYPE_QUEUE, rx=tx_queue, tx=rx_queue)
 
-        concrete_utim = Utim()
-        concrete_utim.connect(dl_type=DataLinkManager.TYPE_QUEUE, rx=rx_queue, tx=tx_queue)
-        concrete_utim.run()
+		concrete_utim = Utim()
+		concrete_utim.connect(dl_type=DataLinkManager.TYPE_QUEUE, rx=rx_queue, tx=tx_queue)
+		concrete_utim.run()
 
-        data1 = [TopDataType.DEVICE, Tag.INBOUND.NETWORK_READY]
+		data1 = [TopDataType.DEVICE, Tag.INBOUND.NETWORK_READY]
 
-        print("cm1 - send {0}".format(data1))
-        cm1.send(data1)
+		print("cm1 - send {0}".format(data1))
+		cm1.send(data1)
 
-        while True:
-            data = cm1.receive()
-            if data:
-                print("RECEIVED DATA: {0}".format(data))
-                session_key = data[1]
-                with open(expanduser("~")+'/.bashrc', 'a') as f:
-                    f.write('export UTIM_SESSION_KEY={}\n'.format(session_key))
-                    print(subprocess.check_output('./source_bashrc.sh'.split()))
-                concrete_utim.stop()
-                break
+		while True:
+			data = cm1.receive()
+			if data:
+				print("RECEIVED DATA: {0}".format(data))
+				session_key = data[1]
+				with open(expanduser("~")+'/.bashrc', 'a') as f:
+					f.write('export UTIM_SESSION_KEY={}\n'.format(session_key))
+					print(subprocess.check_output('./source_bashrc.sh'.split()))
+				concrete_utim.stop()
+				break
 
-        print("RECEIVED SESSION KEY: {key}".format(key=session_key))
+		print("RECEIVED SESSION KEY: {key}".format(key=session_key))
 
-    except ConnectivityConnectError:
-        logging.error("Connectivity error")
-        print("Connectivity error")
+	except ConnectivityConnectError:
+		logging.error("Connectivity error")
+		print("Connectivity error")
 
-    except UtimConnectionException as er:
-        logging.error(er)
+	except UtimConnectionException as er:
+		logging.error(er)
 
-    except UtimInitializationError as er:
-        logging.error(er)
-        print('Invalid UTIM_MASTER_KEY')
+	except UtimInitializationError as er:
+		logging.error(er)
+		print('Invalid UTIM_MASTER_KEY')
 
-    except (KeyboardInterrupt, EOFError):
-        logging.info('Program interrupted')
-        print('Program interrupted')
+	except (KeyboardInterrupt, EOFError):
+		logging.info('Program interrupted')
+		print('Program interrupted')
 
-    finally:
-        if concrete_utim:
-            concrete_utim.stop()
+	finally:
+		if concrete_utim:
+			concrete_utim.stop()
 
-        if cm1:
-            cm1.stop()
+		if cm1:
+			cm1.stop()
 
 
 if __name__ == '__main__':
-    main()
+	main()

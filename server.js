@@ -3,7 +3,10 @@ const net = require('./core');
 const connect = require('connect');
 const cors = require('cors');
 const jsonParser = require('body-parser').json;
+const mqtt = require('mqtt');
 const app = connect();
+
+var configIni = require('config.ini');
 
 const PASS = process.env.UTIM_SESSION_KEY;
 const PORT = 4303;
@@ -34,11 +37,26 @@ async function Start() {
 		core.listCorrespondents
 	]);
 
-	app.use(cors({methods: ['POST']}));
-	app.use(jsonParser());
-	app.use((req, res, next) => req.headers['x-auth'] === PASS ? next() : res.statusCode = 403);
-	app.use(stream.middleware());
-	app.listen(PORT);
+    app.use(cors({methods: ['POST']}));
+    app.use(jsonParser());
+    app.use((req, res, next) => req.headers['x-auth'] === PASS ? next() : res.statusCode = 403);
+    app.use(stream.middleware());
+    app.listen(PORT);
+
+	try {
+		let device = require('byteballcore/device');
+		var config = configIni.load(__dirname + '/utim/config.ini')
+		const client = mqtt.connect('mqtt://' + config.MQTT.hostname);
+
+		var message = config.UTIM.utimname + "\ " + device.getMyDeviceAddress();
+
+		client.on('connect', () => {
+			client.publish('back', message);
+		});
+	}
+	catch(error) {
+		console.error(error);
+	}
 
 	return 'Ok';
 };
@@ -47,5 +65,5 @@ if(PASS) {
 	console.log(PASS);
 	Start().then(console.log).catch(console.error);
 } else {
-	throw new Error('There is no UTIM_SESSION_KEY environment variable in ~/.bachrc file. Launch /utim/utim_launcher.py first!');
+	throw new Error('There is no UTIM_SESSION_KEY environment variable in ~/.bashrc file. Launch utim/utim_launcher.py first!');
 }
