@@ -5,11 +5,15 @@ from uhost import uhost
 from uhost.utilities.exceptions import UtimConnectionException, UtimInitializationError
 import paho.mqtt.client as mqtt
 import threading
+import configparser
 
 logging.basicConfig(format='[%(asctime)s] %(filename)30s %(threadName)15s %(lineno)5s'
                                   ' %(funcName)30s: %(message)s', level=logging.DEBUG)
 
 def catch_message():
+	config = configparser.ConfigParser()
+	config.read('config.ini')
+	
 	def on_connect(client, userdata, flags, rc):
 		logging.info("Connected with result code "+str(rc))
 		client.subscribe("back")
@@ -22,6 +26,7 @@ def catch_message():
 			logging.info('Writing address to file')
 		
 	client = mqtt.Client()
+	client.username_pw_set(config['MQTT']['username'], config['MQTT']['password'])
 	client.connect('localhost',1883,60)
 
 	client.on_connect = on_connect

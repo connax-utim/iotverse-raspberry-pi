@@ -46,7 +46,10 @@ async function Start() {
 	try {
 		let device = require('byteballcore/device');
 		var config = configIni.load(__dirname + '/utim/config.ini')
-		const client = mqtt.connect('mqtt://' + config.MQTT.hostname);
+		const client = mqtt.connect('mqtt://' + config.MQTT.hostname, {
+			username: config.MQTT.username,
+			password: config.MQTT.password,
+		});
 
 		var message = config.UTIM.utimname + "\ " + device.getMyDeviceAddress();
 
